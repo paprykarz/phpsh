@@ -67,7 +67,7 @@ def _insert_documentation_into_db():
 def get_documentation_for_identifier(identifier, short=True):
     identifier = identifier.replace("_", "-").lower()
     manual_file = "php_manual.db"
-    manual_path = os.path.join(os.getenv("HOME"), ".phpsh", manual_file)
+    manual_path = os.path.join(os.getenv("HOME"), os.path.dirname(os.path.realpath(__file__)), manual_file)
     if not os.path.exists(manual_path):
         manual_path = os.path.join("/etc/phpsh", manual_file)
     conn = sqlite.connect(manual_path)
