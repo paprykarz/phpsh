@@ -211,7 +211,7 @@ class PhpMultiliner:
         ls = [l for l in ls if l.find("PHP Startup:") == -1]
         l = "".join(ls)
         if l:
-            if l.find("unexpected $end") != -1:
+            if l.find("unexpected $end") != -1 or l.find("unexpected end") != -1:
                 return (self.incomplete, "")
             return (self.syntax_error, l)
         return (self.complete, "")
@@ -474,10 +474,7 @@ Make sure php-config is in your PATH."""
         import rlcompleter
         input_rc_file = os.path.join(os.environ["HOME"], ".inputrc")
         if os.path.isfile(input_rc_file):
-            try:
-                readline.read_init_file(input_rc_file)
-            except IOError as e:
-                print "I/O error reading ~/.inputrc ({0}): {1}".format(e.errno, e.strerror)
+            readline.parse_and_bind(open(input_rc_file).read())
         readline.parse_and_bind("tab: complete")
 
         # persistent readline history
